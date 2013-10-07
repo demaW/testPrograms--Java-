@@ -1,0 +1,94 @@
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+
+/**
+ * Created with IntelliJ IDEA.
+ * User: dema_v
+ * Date: 07.10.13
+ * Time: 13:54
+ * To change this template use File | Settings | File Templates.
+ */
+public class Calculator {
+    JButton button0 = new JButton("0");
+    JButton button1 = new JButton("1");
+    JButton button2 = new JButton("2");
+    JButton button3 = new JButton("3");
+    JButton button4 = new JButton("4");
+    JButton button5 = new JButton("5");
+    JButton button6 = new JButton("6");
+    JButton button7 = new JButton("7");
+    JButton button8 = new JButton("8");
+    JButton button9 = new JButton("9");
+    JButton equalBuuton = new JButton("=");
+    JButton dotButton = new JButton(".");
+
+    JButton plus = new JButton("+");
+    JButton minus = new JButton("-");
+
+
+    JTextField displayField = new JTextField();
+    Calculator(){
+        JFrame mainFrame = new JFrame("Calculator");
+        mainFrame.setLayout(new BorderLayout());
+        mainFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        mainFrame.setSize(new Dimension(300, 330));
+        mainFrame.setVisible(true);
+        JPanel buttonsPanel = new JPanel();
+        buttonsPanel.setLayout(new GridLayout(4,3)); // numbers
+        JPanel actionButtons = new JPanel();
+        actionButtons.setLayout(new GridLayout(4,1));
+
+
+
+        buttonsPanel.add(button1);
+        buttonsPanel.add(button2);
+        buttonsPanel.add(button3);
+        buttonsPanel.add(button4);
+        buttonsPanel.add(button5);
+        buttonsPanel.add(button6);
+        buttonsPanel.add(button7);
+        buttonsPanel.add(button8);
+        buttonsPanel.add(button9);
+        buttonsPanel.add(button0);
+        buttonsPanel.add(dotButton);
+        buttonsPanel.add(equalBuuton);
+
+        actionButtons.add(plus);
+        actionButtons.add(minus);
+
+        Engine engine = new Engine(this);
+
+        button1.addActionListener(engine);
+        button2.addActionListener(engine);
+        button3.addActionListener(engine);
+        button4.addActionListener(engine);
+        button5.addActionListener(engine);
+        button6.addActionListener(engine);
+        button7.addActionListener(engine);
+        button8.addActionListener(engine);
+        button9.addActionListener(engine);
+        button0.addActionListener(engine);
+        equalBuuton.addActionListener(engine);
+        plus.addActionListener(engine);
+        minus.addActionListener(engine);
+        dotButton.addActionListener(engine);
+
+
+
+
+        mainFrame.add(displayField, BorderLayout.NORTH);
+        mainFrame.add(actionButtons, BorderLayout.EAST);
+        mainFrame.add(buttonsPanel, BorderLayout.CENTER);
+    }
+
+    public static void main (String[] args){
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+
+                new Calculator();
+            }
+        });
+    }
+}

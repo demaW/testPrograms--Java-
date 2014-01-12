@@ -1,0 +1,77 @@
+package com.epam.lab.task2;
+
+import java.util.LinkedList;
+import java.util.StringTokenizer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Main {
+	public static void main(String[] args) {
+		String allText = "Contrary       to popular belief,     Lorem Ipsum is not simply random text."
+				+ " It has     roots in a piece of classical Latin literature from 45 BC, making it "
+				+ "over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College "
+				+ "in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem"
+				+ " Ipsum passage, and going through the cites of the word in classical literature, discovered "
+				+ "the undoubtable source. ";
+		StringBuffer text = new StringBuffer(allText);
+		text = removeSpaces(text);
+		System.out.println(text);
+		LinkedList<StringBuffer> sentences = new LinkedList<>();
+		sentences = analizeText(text);
+		LinkedList<StringBuffer> words = new LinkedList<>();
+		words = analizeSentences(sentences);
+		System.out.println(words);
+		for (StringBuffer stringBuffer : words) {
+			System.out.print(stringBuffer + "|");
+		}
+		LinkedList<StringBuffer> analizedWords = new LinkedList<>();
+		analizedWords = changeWords(words, 6);
+		System.out.println();
+		System.out.println(analizedWords);
+		for (StringBuffer stringBuffer : analizedWords) {
+			System.out.print(stringBuffer + "|");
+		}
+	}
+
+	
+	public static LinkedList<StringBuffer> changeWords(LinkedList<StringBuffer> words, int leght){
+		for (StringBuffer stringBuffer : words) {
+			if(stringBuffer.length()==leght){
+				stringBuffer.replace(0, stringBuffer.length(), "zzz");
+			}
+		}
+		return words;
+		
+	}
+	public static LinkedList<StringBuffer> analizeSentences(
+			LinkedList<StringBuffer> sentence) {
+		LinkedList<StringBuffer> list = new LinkedList<>();
+		for (StringBuffer stringBuffer : sentence) {
+			StringTokenizer stringTokenizer = new StringTokenizer(
+					String.valueOf(stringBuffer), " ,",true);
+			while (stringTokenizer.hasMoreTokens()) {
+				list.add(new StringBuffer(stringTokenizer.nextToken()));
+			}
+		}
+		return list;
+	}
+
+	public static LinkedList<StringBuffer> analizeText(StringBuffer text) {
+		LinkedList<StringBuffer> list = new LinkedList<>();
+		StringTokenizer stringTokenizer = new StringTokenizer(
+				String.valueOf(text), ".!?");
+		while (stringTokenizer.hasMoreTokens()) {
+			list.add(new StringBuffer(stringTokenizer.nextToken()));
+		}
+		return list;
+	}
+	public static StringBuffer removeSpaces(StringBuffer text) {
+		StringBuffer result = null;
+		Pattern pattern = Pattern.compile("[ \\t]+");
+		Matcher matcher = pattern.matcher(text);
+		if (matcher.find()) {
+			 result = new StringBuffer(String.valueOf(matcher.replaceAll(" ")));
+		}
+		return result;
+	}
+}

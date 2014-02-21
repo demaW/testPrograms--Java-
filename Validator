@@ -1,0 +1,47 @@
+package com.epam.carrent.servlets;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class RegistrationValidator {
+
+	public boolean validRegForm(HttpServletRequest request, HttpServletResponse response) {
+		boolean result = true;
+		String errorMsg = null;
+		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		String email = request.getParameter("email");
+
+		Matcher userNameMatcher = null;
+		Matcher emailMatcher = null;
+		Matcher passwordMatcher = null;
+
+		Pattern emailPattern = Pattern.compile("[a-zA-Z0-9]*@[a-z]{4,}\\.com");
+		Pattern userNamePattern = Pattern.compile("^[a-z0-9_-]{3,15}$");
+		Pattern passwordPattern = Pattern.compile("[0-9a-zA-z!@#$%^&*]{6,}");
+
+		userNameMatcher = userNamePattern.matcher(username);
+		emailMatcher = emailPattern.matcher(email);
+		passwordMatcher = passwordPattern.matcher(password);
+
+		if (!emailMatcher.matches()) {
+			errorMsg = "email is incorrect";
+			result = false;
+		}
+		if (!userNameMatcher.matches()) {
+			errorMsg = "username is incorrect";
+			result = false;
+		}
+		if (!passwordMatcher.matches()) {
+			errorMsg = "password is incorrect";
+			result = false;
+		}
+		return result;
+
+	}
+
+}
